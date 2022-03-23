@@ -26,6 +26,10 @@ var dd = today.getDate(); // 날짜 1 ~ 31
 var mm = today.getMonth() + 1; // 달 0 ~ 11
 var day = today.getDay(); // 요일 0 ~ 6
 var yyyy = today.getFullYear(); // 년도 4자리
+var selectDay;
+var monthLangth;
+var firstDay;
+var firstDate;
 
 // 변수정보 입력 화살표 클릭씨 변경되는 변수
 var daySet = day;
@@ -43,24 +47,35 @@ function showDay() {
 // 현재 달 달력 표시
 function setCalendar() {
   // 해당하는 달 1일 요일 판별 및 표시대체
-  var firstDay = new Date(`${mmSet} 1, ${yyyySet} 23:15:30`);
-  var firstDate = firstDay.getDay();
+  firstDay = new Date(`${mmSet} 1, ${yyyySet} 23:15:30`);
+  firstDate = firstDay.getDay();
 
   //해당 달이 31일 마무리인지 30일 마무리인지 지정
-  var monthLangth;
   if (mmSet == 2) monthLangth = 28;
   else if (mmSet == 4 || mmSet == 6 || mmSet == 9 || mmSet == 11)
     monthLangth = 30;
   else monthLangth = 31;
 
-  //1일 날짜 시간순에 따라 숫자 배열
-  for (var i = 1; i < monthLangth + 1; i++) {
-    calendarDates[firstDate].innerText = i;
-    firstDate++;
-  }
   //달력 위 날짜 , 일수 표현변경
   daySet = firstDay.getDay();
   ddSet = 1;
+
+  //1일 날짜 시간순에 따라 숫자 배열과 클릭시 이벤트
+  for (let i = 1; i < monthLangth + 1; i++) {
+    calendarDates[firstDate].innerText = i;
+    calendarDates[firstDate].addEventListener("click", function selectClick() {
+      selectDay = new Date(`${mmSet} ${i}, ${yyyySet} 23:15:30`);
+      currentDay[0].textContent = DAYS[selectDay.getDay()];
+      currentDay[1].textContent = i;
+    });
+    firstDate++;
+  }
+}
+
+function selectClick() {
+  selectDay = new Date(`${mmSet} ${i}, ${yyyySet} 23:15:30`);
+  currentDay[0].textContent = DAYS[selectDay.getDay()];
+  currentDay[1].textContent = i;
 }
 
 // 화면 달력 초기화
