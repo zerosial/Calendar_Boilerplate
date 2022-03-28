@@ -61,7 +61,7 @@ function setCalendar() {
   ddSet = 1;
 
   //1일 날짜 시간순에 따라 숫자 배열과 클릭시 이벤트
-  for (let i = 1; i < monthLangth + 1; i++) {
+   (let i = 1; i < monthLangth + 1; i++) {
     calendarDates[firstDate].innerText = i;
     calendarDates[firstDate].addEventListener("click", function selectClick() {
       selectDay = new Date(`${mmSet} ${i}, ${yyyySet} 23:15:30`);
